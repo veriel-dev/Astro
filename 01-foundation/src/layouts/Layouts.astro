@@ -1,0 +1,161 @@
+---
+import {ViewTransitions} from "astro:transitions";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props as Props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <ViewTransitions />
+    <title>{title}</title>
+    <style is:global>
+      :root {
+		--primary-color: #2563eb;
+        --secondary-color: #3b82f6;
+        --text-color: #1f2937;
+        --background-color: #ffffff;
+        --error-color: #ef4444;
+        --max-width: 1200px;
+        --spacing-unit: 1rem;
+      }
+      @font-face {
+        font-family: "Atkinson";
+        src: url("fonts/atkinson-regular.woff") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Atkinson";
+        src: url("fonts/atkinson-bold.woff") format("woff");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+	  * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+		font-family: "Atkinson", sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        min-height: 100vh;
+      }
+
+      /* Contenedor principal */
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--spacing-unit);
+      }
+
+      /* Estilos de navegación */
+      nav {
+        background-color: var(--primary-color);
+        padding: 1rem 0;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      /* Estilos para encabezados */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      h3 {
+        font-size: 1.75rem;
+      }
+
+      /* Estilos para párrafos y espaciado */
+      p {
+        margin-bottom: 1.5rem;
+      }
+
+      /* Estilos para la página de error 404 */
+      .error-page {
+        text-align: center;
+        padding: 4rem 1rem;
+      }
+
+      .error-page h1 {
+        color: var(--error-color);
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+
+      .error-page p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Estilos responsivos */
+      @media (max-width: 768px) {
+        nav ul {
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+        h2 {
+          font-size: 1.75rem;
+        }
+        h3 {
+          font-size: 1.5rem;
+        }
+
+        .error-page h1 {
+          font-size: 3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Nav />
+	<main class="container">
+		<slot />
+	</main>
+    <Footer />
+  </body>
+</html>

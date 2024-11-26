@@ -1,0 +1,55 @@
+---
+import Layouts from "../layouts/Layouts.astro";
+
+const name = "Víctor Manuel Ordiales García";
+const title = "About Page | Astro JS";
+---
+
+<Layouts title={title}>
+	<h1>Sobre Mí</h1>
+  
+  <section class="about-content">
+    <img src="https://placehold.co/600x400" alt="Mi foto de perfil" class="profile-img">
+    
+    <div class="bio">
+      <p>¡Hola! Soy un desarrollador web apasionado por crear experiencias digitales excepcionales.</p>
+      
+      <h2>Experiencia</h2>
+      <p>Tengo X años de experiencia en desarrollo web, especializándome en tecnologías modernas como React, Astro y Node.js.</p>
+      
+      <h2>Habilidades</h2>
+      <ul class="skills-list">
+        <li>Desarrollo Frontend</li>
+        <li>Diseño Responsivo</li>
+        <li>Optimización de Rendimiento</li>
+        <li>SEO Técnico</li>
+      </ul>
+    </div>
+  </section>
+
+  <style>
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .profile-img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+    }
+    .skills-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Layouts>
