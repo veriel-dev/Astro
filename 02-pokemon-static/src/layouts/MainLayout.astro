@@ -1,0 +1,20 @@
+---
+import HeadCommon from "./head/HeadCommon.astro";
+interface Props {
+    title: string
+}
+const {title} = Astro.props as Props
+---
+
+<html lang="es">
+	<head>
+		<HeadCommon />
+        <!-- Required -->
+		<title>{title}</title>
+	</head>
+	<body>
+        <main class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 text-gray-200 min-h-screen">
+            <slot />
+        </main>
+	</body>
+</html>
