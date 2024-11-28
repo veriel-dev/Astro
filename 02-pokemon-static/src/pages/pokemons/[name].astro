@@ -6,23 +6,25 @@ import type { PokemonListResponse } from "../../interfaces/pokemon-list.response
 
 export const getStaticPaths = (async () => {
 
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=151")
+    const response = await fetch("https://fakemon-api-production.up.railway.app/api/v1/fakemons")
     const {results} = await response.json() as PokemonListResponse
 
-    return results.map(result => ({
-        params: {name: result.name},
-        props: {name: result.name, url: result.url}
+    return results.map(pkm => ({
+        params: {name: pkm.name},
+        props: {name: pkm.name, pkm, id: pkm._id, image: pkm.imageUrl}
     }))
 }) satisfies GetStaticPaths;
 
 const {name} = Astro.params
-const {url} = Astro.props
+const {pkm, image} = Astro.props
 
-const id = url.split('/').at(-2);
-const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1.ogg`
 ---
 
-<MainLayout title={`Pokemon - ${name}`}>
+<MainLayout 
+    title={`Pokemon - ${name}`}
+    image={image}>
+
     <section class="mt-10 x-10 flex flex-col justify-center items-center">
         <div>
             <a href="/">Regresar</a>
@@ -30,7 +32,7 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
         </div>
         <br/>
 
-        <PokemonCard name={name} url={url} isBig/>
+        <PokemonCard pkm={pkm} isBig/>
         <audio controls class="mt-5">
             <source src={audioSrc} type="audio/ogg" />
             Your browser does not support the audio element.

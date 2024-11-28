@@ -1,15 +1,26 @@
 ---
+import { siteInfo } from "src/consts/site-info";
 import HeadCommon from "./head/HeadCommon.astro";
 interface Props {
-    title: string
+    title?: string
+	image?: string
+	description?:string
 }
-const {title} = Astro.props as Props
+const {title = siteInfo.title, description = siteInfo.description, image } = Astro.props as Props
 ---
 
 <html lang="es">
 	<head>
 		<HeadCommon />
-        <!-- Required -->
+        
+		<!-- SEO -->
+		<meta name="description" content={description} />
+		<meta name="author" content="Víctor Manuel Ordiales García | VerielDev">
+		<!-- OG Metatags -->
+		<meta property="og:title" content={title}/>
+		<meta property="og:description" content={description}/>
+		<meta property="og:image" content={image}/>
+		<!-- Required -->
 		<title>{title}</title>
 	</head>
 	<body>
