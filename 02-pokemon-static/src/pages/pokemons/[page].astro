@@ -5,7 +5,7 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import PokemonCard from "../../components/pokemons/PokemonCard.astro"
 
 export const getStaticPaths = (async ({paginate}) => {
-	const response = await fetch("http://localhost:3000/api/v1/fakemons?skip=0&limit=30")
+	const response = await fetch("https://fakemon-api-production.up.railway.app/api/v1/fakemons")
 	const { results } = await response.json() as PokemonListResponse
 	return paginate(results, {pageSize: 8});
 }) satisfies GetStaticPaths;
