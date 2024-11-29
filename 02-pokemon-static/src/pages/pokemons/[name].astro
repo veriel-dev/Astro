@@ -5,8 +5,9 @@ import PokemonCard from "../../components/pokemons/PokemonCard.astro";
 import type { PokemonListResponse } from "../../interfaces/pokemon-list.response";
 
 export const getStaticPaths = (async () => {
-
-    const response = await fetch("https://fakemon-api-production.up.railway.app/api/v1/fakemons")
+    
+    const apiUrl =  import.meta.env.API_URL
+    const response = await fetch(apiUrl)
     const {results} = await response.json() as PokemonListResponse
 
     return results.map(pkm => ({
@@ -18,7 +19,6 @@ export const getStaticPaths = (async () => {
 const {name} = Astro.params
 const {pkm, image} = Astro.props
 
-const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/1.ogg`
 ---
 
 <MainLayout 
@@ -33,10 +33,6 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
         <br/>
 
         <PokemonCard pkm={pkm} isBig/>
-        <audio controls class="mt-5">
-            <source src={audioSrc} type="audio/ogg" />
-            Your browser does not support the audio element.
-        </audio>
     </section>
 </MainLayout>
 <style>

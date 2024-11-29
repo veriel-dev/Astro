@@ -1,122 +1,159 @@
 ---
-import type { Result } from '../../interfaces/pokemon-list.response'
+import type { Result } from "../../interfaces/pokemon-list.response";
 
 interface Props {
-    pkm: Result
-    isBig?: boolean
+  pkm: Result;
+  isBig?: boolean;
 }
-function objectIdToSequential(objectId:string) {
+function objectIdToSequential(objectId: string) {
   const lastSixChars = objectId.slice(-6);
   const numericValue = parseInt(lastSixChars, 16);
 
   return numericValue % 2001;
 }
 
-const {pkm, isBig} = Astro.props as Props
+const { pkm, isBig } = Astro.props as Props;
 
 const idPkm = pkm._id;
 
-const urlPkmImage = "https://fakemon-api-production.up.railway.app/api/v1/fakemons" + pkm.imageUrl
+const apiUrl = import.meta.env.API_URL;
+const urlPkmImage = apiUrl + pkm.imageUrl;
 
-const { types, weight, height, name, description } = pkm
+const { types, weight, height, name, description, stats } = pkm;
 
+const getStatPercentage = (value: number) => (value / 120) * 100;
 
-const formatPokemonId = (idPkm:string) => `#${String(objectIdToSequential(idPkm)).padStart(3, '0')}`;
+const formatPokemonId = (idPkm: string) =>
+  `#${String(objectIdToSequential(idPkm)).padStart(3, "0")}`;
 
-const nameTypes = types.map(type => type.name)
+const nameTypes = types.map((type) => type.name);
 
-const colors:Record<string, string>= {
-  normal: 'bg-gray-500/20',
-  flying: 'bg-blue-500/20',
-  fire: 'bg-red-500/20',
-  water: 'bg-blue-400/20',
-  grass: 'bg-green-500/20',
-  electric: 'bg-yellow-500/20',
-  ice: 'bg-cyan-500/20',
-  fighting: 'bg-red-600/20',
-  poison: 'bg-purple-500/20',
-  ground: 'bg-amber-700/20',
-  psychic: 'bg-pink-500/20',
-  bug: 'bg-lime-500/20',
-  rock: 'bg-stone-500/20',
-  ghost: 'bg-indigo-500/20',
-  dragon: 'bg-violet-600/20',
-  dark: 'bg-zinc-800/20',
-  steel: 'bg-slate-400/20',
-  fairy: 'bg-pink-300/20'
+const colors: Record<string, string> = {
+  normal: "bg-gray-500/20",
+  flying: "bg-blue-500/20",
+  fire: "bg-red-500/20",
+  water: "bg-blue-400/20",
+  grass: "bg-green-500/20",
+  electric: "bg-yellow-500/20",
+  ice: "bg-cyan-500/20",
+  fighting: "bg-red-600/20",
+  poison: "bg-purple-500/20",
+  ground: "bg-amber-700/20",
+  psychic: "bg-pink-500/20",
+  bug: "bg-lime-500/20",
+  rock: "bg-stone-500/20",
+  ghost: "bg-indigo-500/20",
+  dragon: "bg-violet-600/20",
+  dark: "bg-zinc-800/20",
+  steel: "bg-slate-400/20",
+  fairy: "bg-pink-300/20",
 };
 const textColors: Record<string, string> = {
-  normal: 'text-gray-500',
-  flying: 'text-blue-500',
-  fire: 'text-red-500',
-  water: 'text-blue-400',
-  grass: 'text-green-500',
-  electric: 'text-yellow-500',
-  ice: 'text-cyan-500',
-  fighting: 'text-red-600',
-  poison: 'text-purple-500',
-  ground: 'text-amber-700',
-  psychic: 'text-pink-500',
-  bug: 'text-lime-500',
-  rock: 'text-stone-500',
-  ghost: 'text-indigo-500',
-  dragon: 'text-violet-600',
-  dark: 'text-zinc-800',
-  steel: 'text-slate-400',
-  fairy: 'text-pink-300'
+  normal: "text-gray-500",
+  flying: "text-blue-500",
+  fire: "text-red-500",
+  water: "text-blue-400",
+  grass: "text-green-500",
+  electric: "text-yellow-500",
+  ice: "text-cyan-500",
+  fighting: "text-red-600",
+  poison: "text-purple-500",
+  ground: "text-amber-700",
+  psychic: "text-pink-500",
+  bug: "text-lime-500",
+  rock: "text-stone-500",
+  ghost: "text-indigo-500",
+  dragon: "text-violet-600",
+  dark: "text-zinc-800",
+  steel: "text-slate-400",
+  fairy: "text-pink-300",
 };
 ---
 
-<div class="max-w-sm mx-auto bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300 hover:-translate-y-1">
-    <div class="relative p-6">
-      <div class="absolute top-1/2 right-4 w-32 h-32 bg-green-500/10 rounded-full blur-2xl"></div>
-      
-      <div class="flex items-center justify-between mb-4">
-        <h2 class={`text-2xl font-bold ${textColors[nameTypes[0]]} capitalize`}>{name}</h2>
-        <span class={`${textColors[nameTypes[0]]} font-mono text-sm`}>{formatPokemonId(idPkm!!)}</span>
-      </div>
+<div
+  class="max-w-sm mx-auto bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300 hover:-translate-y-1"
+>
+  <div class="relative p-6">
+    <div
+      class="absolute top-1/2 right-4 w-32 h-32 bg-green-500/10 rounded-full blur-2xl"
+    >
+    </div>
 
-      <div class="flex gap-2 mb-4">
-        {
-          nameTypes.map((name:string) => (
-            <span class={`px-3 py-1 text-sm font-medium text-white ${colors[name]} rounded-full capitalize`}>
-              {name}
+    <div class="flex items-center justify-between mb-4">
+      <h2 class={`text-2xl font-bold ${textColors[nameTypes[0]]} capitalize`}>
+        {name}
+      </h2>
+      <span class={`${textColors[nameTypes[0]]} font-mono text-sm`}
+        >{formatPokemonId(idPkm!!)}</span
+      >
+    </div>
+
+    <div class="flex gap-2 mb-4">
+      {
+        nameTypes.map((name: string) => (
+          <span
+            class={`px-3 py-1 text-sm font-medium text-white ${colors[name]} rounded-full capitalize`}
+          >
+            {name}
           </span>
-          ))
-        }
-      </div>
+        ))
+      }
+    </div>
 
-      <div class="relative">
+    <div class="relative">
+      <a href={`/pokemons/${name}`}>
+        <img
+          transition:name={`${name}-img`}
+          src={urlPkmImage}
+          alt={name}
+          class:list={[
+            "relative w-full object-contain",
+            {
+              "transform transition-all duration-300 hover:scale-110 hover:rotate-12":
+                isBig,
+              "transform hover:scale-105 transition-transform duration-300":
+                !isBig,
+            },
+          ]}
+          loading="lazy"
+        />
+      </a>
+    </div>
 
-        <a href={`/pokemons/${name}`}>
-            <img 
-              transition:name={`${name}-img`}
-              src={urlPkmImage}
-              alt={name}
-              class:list={[
-                "relative w-full object-contain",
-                {
-                  "transform transition-all duration-300 hover:scale-110 hover:rotate-12": isBig,
-                  "transform hover:scale-105 transition-transform duration-300": !isBig
-                }
-              ]}
-              loading="lazy"
-            />
-        </a>
+    <div class="mt-4 grid grid-cols-2 gap-4">
+      <div class="text-center p-2 rounded-lg bg-gray-700/50">
+        <p class="text-gray-400 text-sm">Weight</p>
+        <p class="text-white font-medium">{weight} kg</p>
       </div>
-      
-      <div class="mt-4 grid grid-cols-2 gap-4">
-        <div class="text-center p-2 rounded-lg bg-gray-700/50">
-          <p class="text-gray-400 text-sm">Weight</p>
-          <p class="text-white font-medium">{weight} kg</p>
-        </div>
-        <div class="text-center p-2 rounded-lg bg-gray-700/50">
-          <p class="text-gray-400 text-sm">Height</p>
-          <p class="text-white font-medium">{height} m</p>
-        </div>
+      <div class="text-center p-2 rounded-lg bg-gray-700/50">
+        <p class="text-gray-400 text-sm">Height</p>
+        <p class="text-white font-medium">{height} m</p>
       </div>
     </div>
-    <p class="text-center p-4 text-gray-500">
-      {description}
-    </p>
   </div>
+  {isBig && (
+    <div class="relative p-6">
+      {
+        Object.entries(stats).map(([stat, value]) => (
+          <div class="w-full">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="capitalize text-gray-300 w-24">{stat}</span>
+              <span class="text-gray-300">{value}</span>
+            </div>
+            <div class="w-full bg-slate-800 rounded-full h-3">
+              {nameTypes.map((name: string) => (
+                <div
+                  class={`${colors[name]} h-3 rounded-full transition-all duration-500`}
+                  style={{ width: `${getStatPercentage(value)}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  )}
+  <p class="text-center p-4 text-gray-500">
+    {description}
+  </p>
+</div>
