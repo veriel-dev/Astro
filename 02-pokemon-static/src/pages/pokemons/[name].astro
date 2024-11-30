@@ -12,7 +12,7 @@ export const getStaticPaths = (async () => {
 
     return results.map(pkm => ({
         params: {name: pkm.name},
-        props: {name: pkm.name, pkm, id: pkm._id, image: pkm.imageUrl}
+        props: {name: pkm.name, pkm, id: pkm._id, image: apiUrl + pkm.imageUrl}
     }))
 }) satisfies GetStaticPaths;
 

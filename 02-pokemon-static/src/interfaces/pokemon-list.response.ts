@@ -26,5 +26,15 @@ export interface Result {
     description: string,
     imageUrl: string
     generation: number
-    createdAt: string
+    createdAt: string,
+    abilities :{
+        normal: {
+            name: string
+            description: string
+        },
+        hidden: {
+            name: string
+            description: string
+        }
+    }
 }
