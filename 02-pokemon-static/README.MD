@@ -1,3 +1,6 @@
+Bienvenido a la Fakemon App, una aplicación dedicada a explorar y descubrir el fascinante mundo de los Fakemon. Estos seres mágicos habitan en diversos ecosistemas y poseen habilidades únicas que los hacen especiales. A continuación, te presentamos una guía rápida sobre los Fakemon que podrás encontrar en la app, sus hábitats y sus habilidades.
+
+
 - Aquadive. Aquadive se encuentra en ríos subterráneos. emite un suave resplandor azulado genera corrientes de agua al nadar es conocido por su extraordinaria resistencia crea esferas de agua flotantes
 
 - Crystalrex. Crystalrex vive en antiguas cordilleras montañosas. su piel tiene la textura de granito pulido hiberna durante largos períodos de tiempo su defensa natural es extraordinaria crea túneles a través de la roca sólida
